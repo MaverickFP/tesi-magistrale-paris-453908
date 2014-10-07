@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:core="http://activemq.apache.org/schema/core"
+	xmlns:int="http://www.springframework.org/schema/integration"
+	xmlns:jms="http://www.springframework.org/schema/jms"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+		http://activemq.apache.org/schema/core http://activemq.org/config/1.0/1.0.xsd
+		http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration-4.0.xsd
+		http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms-4.0.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd">
+
+
+
+<bean id="connectionFactory" class="org.apache.activemq.spring.ActiveMQConnectionFactory">
+	<!-- <property name="brokerURL" value="tcp://192.168.50.103:61616" /> -->
+	<property name="brokerURL" value="tcp://localhost:61616" />
+</bean>
+
+
+
+<!-- Destinazioni -->
+<bean id="topic" class="org.apache.activemq.command.ActiveMQTopic">
+	<constructor-arg value="es1.topicInput" />
+</bean>
+
+
+<bean id="queue" class="org.apache.activemq.command.ActiveMQQueue">
+	<constructor-arg value="es1.codaRisFinale" />
+</bean>
+
+
+
+
+<bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+	<property name="connectionFactory" ref="connectionFactory"/>
+	<property name="pubSubDomain" value="true"/>	
+</bean>
+
+
+
+<bean id="gestore" class="it.uniroma3.dia.asw.jms.produttore.Gestore">
+	<property name="producer" ref="producer"/>
+</bean>
+
+
+
+<bean id="producer" class="it.uniroma3.dia.asw.jms.produttore.Producer">
+	<property name="jmsTemplate" ref="jmsTemplate"/>
+</bean>
+
+
+
+<bean id="topicAsyncListener" class="it.uniroma3.dia.asw.jms.produttore.AsyncConsumer">
+	<property name="gestore" ref="gestore"/>
+</bean>
+
+<!--
+This is the Spring DefaultMessageListenerContainer (DMLC). All default values
+for the DMLC are used except for concurrency; By default the DMLC knows to use the
+bean whose name is connectionFactory.
+-->
+  
+<jms:listener-container container-type="default"  connection-factory="connectionFactory">
+	    <jms:listener destination="es1.codaRisFinale" ref="topicAsyncListener" method="onMessage" />
+</jms:listener-container>
+
+
+
+</beans>
