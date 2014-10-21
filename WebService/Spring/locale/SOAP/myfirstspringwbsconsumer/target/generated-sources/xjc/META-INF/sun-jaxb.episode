@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<bindings version="2.1" xmlns="http://java.sun.com/xml/ns/jaxb">
+  <!--
+
+Questo file è stato generato dall'architettura JavaTM per XML Binding (JAXB) Reference Implementation, v2.2.7 
+Vedere <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
+Qualsiasi modifica a questo file andrà persa durante la ricompilazione dello schema di origine. 
+Generato il: 2014.10.07 alle 03:54:42 PM CEST 
+
+  -->
+  <bindings scd="x-schema::tns" xmlns:tns="http://www.parisnews.it/serviceSchema">
+    <schemaBindings map="false">
+      <package name="user.wsdl"/>
+    </schemaBindings>
+    <bindings scd="tns:getUserResponse">
+      <class ref="user.wsdl.GetUserResponse"/>
+    </bindings>
+    <bindings scd="~tns:user">
+      <class ref="user.wsdl.User"/>
+    </bindings>
+    <bindings scd="tns:setUserResponse">
+      <class ref="user.wsdl.SetUserResponse"/>
+    </bindings>
+    <bindings scd="tns:getUserRequest">
+      <class ref="user.wsdl.GetUserRequest"/>
+    </bindings>
+    <bindings scd="tns:delUserRequest">
+      <class ref="user.wsdl.DelUserRequest"/>
+    </bindings>
+    <bindings scd="tns:setUserRequest">
+      <class ref="user.wsdl.SetUserRequest"/>
+    </bindings>
+    <bindings scd="tns:delUserResponse">
+      <class ref="user.wsdl.DelUserResponse"/>
+    </bindings>
+  </bindings>
+</bindings>
+

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+<bean id="sqrtService" class="it.uniroma3.dia.asw.rmi.server.SqrtServiceImpl"/>
+
+<bean class="org.springframework.remoting.rmi.RmiServiceExporter">
+    <!-- does not necessarily have to be the same name as the bean to be exported -->
+    <!-- serviceName represents RMI Service Name -->
+    <property name="serviceName" value="sqrtService"/>
+    <!-- service represents RMI Object(RMI Service Impl) -->
+    <property name="service" ref="sqrtService"/>
+    <!-- serviceInterface represents RMI Service Interface exposed -->
+    <property name="serviceInterface" value="it.uniroma3.dia.asw.rmi.service.SqrtService"/>
+    <!-- defaults to 1099 -->
+    <property name="registryPort" value="1099"/>
+    <!-- <property name="registryHost" value="192.168.50.102"/>   -->
+</bean>
+
+</beans>
